@@ -14,7 +14,7 @@ locals {
       size           = "Standard_F2"
       admin_username = "tsrlearning"
       username       = "tsrlearning"
-      public_key     = file("tsrlearningkey.pub")
+      public_key     = var.public_key
       custom_data    = local.custom_data_vm_1
       vars = {
         # RUNNER_URL = "https://github.com/actions/runner/releases/download/v2.317.0/actions-runner-linux-x64-2.317.0.tar.gz"
