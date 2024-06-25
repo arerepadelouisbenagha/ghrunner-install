@@ -1,0 +1,88 @@
+# name: terraform prevent destroy
+# on:
+#   push:
+#     branches:
+#       - tsrlearnindev
+#       - main
+#     paths:
+#       - "Docker/infrastructure/**"
+#       - ".github/workflows/tf-infrastructure-deployment.yml"
+
+# env:
+#   terraform_version: "1.1.7"
+#   workdir: "Docker/infrastructure/"
+#   TF_VAR_private_key: ${{ secrets.private_key }}
+#   TF_VAR_client_secret: "${{ secrets.client_secret }}"
+#   TF_VAR_login_password: "${{ secrets.login_password }}"
+
+# jobs:
+#   Terrraform-deployments:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Git checkout
+#         uses: actions/checkout@v4
+      
+#       - name: Terraform install version
+#         uses: hashicorp/setup-terraform@v3
+#         with:
+#           terraform_version: ${{ env.terraform_version }}
+
+#       - name: Install Azure CLI
+#         run: |
+#           curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+      
+#       - name: Azure CLI login
+#         run: az login --use-device-code
+
+#       - name: terraform init
+#         run: cd ${{ env.workdir }} && terraform init
+
+#       - name: terraform fmt
+#         run: cd ${{ env.workdir }} && terraform fmt .
+
+#       - name: terraform validate
+#         run: cd ${{ env.workdir }} && terraform validate
+#         env:
+#           TF_VAR_private_key: "${{ secrets.private_key }}"
+#           TF_VAR_client_secret: "${{ secrets.client_secret }}"
+      
+#       - name: terraform plan
+#         id: plan
+#         run: |
+#           cd ${{ env.workdir }} && terraform plan -out=tfplan
+#         env:
+#           TF_VAR_private_key: "${{ secrets.private_key }}"
+#           TF_VAR_client_secret: "${{ secrets.client_secret }}"
+#           TF_VAR_login_password: "${{ secrets.login_password }}"
+
+#       - name: Check for Destroy in Plan
+#         id: check_destroy
+#         run: |
+#          cd ${{ env.workdir }}
+#          terraform show -json tfplan > tfplan.json
+#          jq '.resource_changes[] | select(.change.actions[] == "delete")' tfplan.json > destroy_plan.txt
+
+#           if [ -s destroy_plan.txt ]; then
+#             echo "Terraform plan contains destroy actions. Failing the job."
+#             exit 1
+#           fi
+#         env:
+#           TF_VAR_private_key: "${{ secrets.private_key }}"
+#           TF_VAR_client_secret: "${{ secrets.client_secret }}"
+#           TF_VAR_login_password: "${{ secrets.login_password }}"
+
+#       # - name: terraform apply
+#       #   run: cd ${{ env.workdir }} && terraform apply -auto-approve
+#       #   env:
+#       #     TF_VAR_private_key: "${{ secrets.private_key }}"
+#       #     TF_VAR_client_secret: "${{ secrets.client_secret }}"
+#       #     TF_VAR_login_password: "${{ secrets.login_password }}"
+
+#       - name: Terraform Apply
+#         if: ${{ github.ref == 'refs/heads/main' && steps.check_destroy.outputs.contain_destroy != 'true' }}
+#         run: cd ${{ env.workdir }} && terraform apply -auto-approve tfplan
+#         env:
+#           TF_VAR_private_key: "${{ secrets.private_key }}"
+#           TF_VAR_client_secret: "${{ secrets.client_secret }}"
+#           TF_VAR_login_password: "${{ secrets.login_password }}"

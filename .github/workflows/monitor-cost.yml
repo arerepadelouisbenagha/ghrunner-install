@@ -1,0 +1,48 @@
+# name: Scheduled Azure Cost Monitoring
+
+# on:
+#   push:
+#     branches:
+#       - 'tsrlearnindev'
+#       - 'main'
+
+#     paths:
+#       - 'monitor-cost.yml'
+#       - 'Docker/infrastructure/scripts/**'
+
+#   schedule:
+#     - cron: '0 0 * * *' # This runs the workflow daily at midnight UTC
+
+
+# env:
+#    workdir: "Docker/infrastructure/scripts/"
+#    TF_VAR_client_secret: "${{ secrets.client_secret }}"
+#    TF_VAR_slack_webhook_url: "${{ secrets.client_secret }}"
+
+# jobs:
+#   Monitor-Azure-Cost:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
+
+#       - name: Az login
+#         run: az login --service-principal -u "b26145ad-4bdc-4af7-bc86-8dc3d89e9d4e" -p ${{ secrets.client_secret }} --tenant "389dc11c-508a-4f1e-a529-1f19aa1a8e7b"
+#         env:
+#           TF_VAR_client_secret: "${{ secrets.client_secret }}"
+
+#       - name: Install Azure CLI
+#         run: |
+#           curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+#       - name: List
+#         run: ls -l
+
+#       - name: Run cost monitoring script
+#         run: |
+#           cd ${{ env.workdir }} && sudo chmod +x ./monitor_cost.sh && ./monitor_cost.sh "b26145ad-4bdc-4af7-bc86-8dc3d89e9d4e" "${{ secrets.client_secret }}" "389dc11c-508a-4f1e-a529-1f19aa1a8e7b" "f823a9e2-b296-41ab-b452-5f2c01eefae8" "${{ secrets.SLACK_WEBHOOK_URL }}" 
+#         env:
+#          TF_VAR_client_secret: "${{ secrets.client_secret }}"
+#          TF_VAR_slack_webhook_url: "${{ secrets.client_secret }}"
+
