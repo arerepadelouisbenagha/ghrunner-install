@@ -13,6 +13,7 @@ env:
   terraform_version: "1.1.7"
   workdir: "infrastructure/"
   TF_VAR_private_key: ${{ secrets.private_key }}
+  TF_VAR_public_key: ${{ secrets.public_key }}
   TF_VAR_client_secret: "${{ secrets.client_secret }}"
   TF_VAR_GH_PAT_TOKEN: "${{ secrets.GH_PAT_TOKEN }}"
   ARM_CLIENT_ID: b26145ad-4bdc-4af7-bc86-8dc3d89e9d4e

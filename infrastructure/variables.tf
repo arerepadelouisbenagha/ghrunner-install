@@ -31,6 +31,10 @@ variable "private_key" {
   type = string
 }
 
+variable "public_key" {
+  type = string
+}
+
 variable "custom_data_vm_1" {
   description = "Path to the custom data script for VM initialization"
   type        = string
