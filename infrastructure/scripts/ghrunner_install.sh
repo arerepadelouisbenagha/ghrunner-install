@@ -24,7 +24,7 @@ echo "${RUNNER_SHA}  actions-runner-linux-x64-2.317.0.tar.gz" | shasum -a 256 -c
 tar xzf "${RUNNER_TAR}"
 
 curl -L  -X POST -H "Accept: application/vnd.github+json" \
-    -H "Authorization: Bearer ${TOKEN}" -H "X-GitHub-Api-Version: 2022-11-28" \
+    -H "Authorization: Bearer ${GH_PAT_TOKEN}" -H "X-GitHub-Api-Version: 2022-11-28" \
     https://api.github.com/orgs/$GITHUB_ORG/actions/runners/registration-token > response.json
 
 sudo chown $USER:$USER response.json
