@@ -20,7 +20,7 @@ env:
   ARM_CLIENT_SECRET: ${{ secrets.client_secret }}
   ARM_TENANT_ID: 389dc11c-508a-4f1e-a529-1f19aa1a8e7b
   ARM_SUBSCRIPTION_ID: f823a9e2-b296-41ab-b452-5f2c01eefae8
-  TF_VAR_custom_data_vm_1: "${{ github.workspace }}/Docker/infrastructure/scripts/ghrunner_install.sh"
+  TF_VAR_custom_data_vm_1: "${{ github.workspace }}/infrastructure/scripts/ghrunner_install.sh"
 
 jobs:
   Terrraform-deployments:
