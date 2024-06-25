@@ -14,7 +14,7 @@ RUNNER_TAR="${RUNNER_TAR}"
 GH_PAT_TOKEN="${GH_PAT_TOKEN}"
 GITHUB_ORG="techstarterepublic-dev"
 USER_HOME="/home/tsrlearning"
-USER="admin"
+USER="tsrlearning"
 RUNNER_DIR="/actions-runner"
 
 
@@ -32,7 +32,7 @@ RUNNER_TOKEN=$(jq -r '.token' response.json)
 echo "RUNNER_TOKEN: $RUNNER_TOKEN"
 
 
-sudo chown -R $USER:$USER "$RUNNER_DIR"
+sudo chown -R $USER:$USER "$RUNNER_DIR" 
 sudo -u tsrlearning bash <<EOF
 cd $RUNNER_DIR
 ./config.sh --url https://github.com/$GITHUB_ORG --token $RUNNER_TOKEN <<EOL
