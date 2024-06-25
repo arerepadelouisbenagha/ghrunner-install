@@ -12,9 +12,9 @@ RUNNER_URL="${RUNNER_URL}"
 RUNNER_SHA="${RUNNER_SHA}"
 RUNNER_TAR="${RUNNER_TAR}"
 GH_PAT_TOKEN="${GH_PAT_TOKEN}"
-GITHUB_ORG="tsrlearning-training"
+GITHUB_ORG="techstarterepublic-dev"
 USER_HOME="/home/tsrlearning"
-USER="tsrlearning"
+USER="admin"
 RUNNER_DIR="/actions-runner"
 
 
