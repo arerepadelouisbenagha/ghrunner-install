@@ -2,15 +2,16 @@ name: Create Terraform code for tf-infrastructure folder
 on:
   push:
     branches:
-      - tsrlearnindev
-      # - main
+      - dev
+      - main
+
     paths:
-      - "Docker/infrastructure/**"
-      - ".github/workflows/tf-infrastructure-deployment.yml"
+      - "infrastructure/**"
+      - ".github/workflows/gh-runner-infra-deploy.yml"
 
 env:
   terraform_version: "1.1.7"
-  workdir: "Docker/infrastructure/"
+  workdir: "infrastructure/"
   TF_VAR_private_key: ${{ secrets.private_key }}
   TF_VAR_client_secret: "${{ secrets.client_secret }}"
   TF_VAR_GH_PAT_TOKEN: "${{ secrets.GH_PAT_TOKEN }}"
